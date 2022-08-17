@@ -13,30 +13,86 @@
         <div class="grid grid-cols-3 gap-4 w-4/5 mx-auto">
             <div class="bg-green-500 p-5 text-white font-bold text-2xl">
                 <h4>Your Total Deposit</h4>
-                <h2>$<span class="total-deposit">00</span></h2>
+                <h2>$<span id="total-deposit">00</span></h2>
             </div>
             <div class="bg-purple-500 p-5 text-white font-bold text-2xl">
                 <h4>Your Total Withdraw</h4>
-                <h2>$<span class="total-deposit">00</span></h2>
+                <h2>$<span id="total-withdraw">00</span></h2>
             </div>
             <div class="bg-pink-500 p-5 text-white font-bold text-2xl">
                 <h4>Your Total Amount</h4>
-                <h2>$<span class="total-deposit">1240</span></h2>
+                <h2>$<span id="total-amount">1240</span></h2>
             </div>
         </div>
         <div class="grid grid-cols-2 gap-4 w-4/5 mx-auto mt-9">
-            <div class="bg-amber-400 p-5 text-white ">
-                <h4 class="font-bold text-2xl">Deposit your Money</h4>
-                <input class="block mt-2 w-4/5 px-2 py-1" type="text" placeholder="$ Enter amount you want to deposit">
-                <button class="bg-pink-500 px-5 py-1 mt-2 font-bold hover:bg-blue-500">Submit</button>
+            <div class="bg-amber-400 p-5  ">
+                <h4 class="font-bold text-2xl text-white">Deposit your Money</h4>
+                <input id="deposit-input-field" class="block mt-2 w-4/5 px-2 py-1" type="text" placeholder="$ Enter amount you want to deposit">
+                <button id="deposit-btn" class="bg-pink-500 px-5 py-1 mt-2 font-bold hover:bg-blue-500 text-white">Submit</button>
             </div>
-            <div class="bg-rose-500 p-5 text-white ">
-                <h4 class="font-bold text-2xl">Withdraw your Money</h4>
-                <input class="block mt-2 w-4/5 px-2 py-1" type="text" placeholder="$ Enter amount you want to withdraw">
-                <button class="bg-green-500 px-5 py-1 mt-2 font-bold hover:bg-blue-500">Submit</button>
+            <div class="bg-rose-500 p-5  ">
+                <h4 class="font-bold text-2xl text-white">Withdraw your Money</h4>
+                <input id="withdraw-input-field" class="block mt-2 w-4/5 px-2 py-1" type="text" placeholder="$ Enter amount you want to withdraw">
+                <button id="withdraw-btn" class="bg-green-500 px-5 py-1 mt-2 font-bold hover:bg-blue-500 text-white">Submit</button>
             </div>
         </div>
     </section>
+
+    <script>
+        document.getElementById('deposit-btn').addEventListener('click', function(){
+            const depositInputField = document.getElementById('deposit-input-field');
+            const newDepositValueString = depositInputField.value;
+            depositInputField.value = '';
+            const newDepositValue = parseFloat(newDepositValueString);
+            if(isNaN(newDepositValue)){
+                alert('Please Enter Only Number !')
+                return;
+            }
+            const previoustDepositBox = document.getElementById('total-deposit');
+            const previoustDepositValueString = previoustDepositBox.innerText;
+            const previoustDepositValue = parseFloat( previoustDepositValueString);
+            const totalDeposit = newDepositValue + previoustDepositValue;
+            previoustDepositBox.innerText = totalDeposit;
+
+
+            const previousTotalAmountBox = document.getElementById('total-amount');
+            const previousTotalAmountString = previousTotalAmountBox.innerText;
+            const previousTotalAmount = parseFloat(previousTotalAmountString);
+            const totalAmount = newDepositValue + previousTotalAmount;
+            previousTotalAmountBox.innerText = totalAmount; 
+    
+        })
+
+        document.getElementById('withdraw-btn').addEventListener('click', function(){
+            const withdrawInputField = document.getElementById('withdraw-input-field');
+            const newWitrhdrawValueString = withdrawInputField.value;
+            withdrawInputField.value = '';
+            const newWitrhdrawValue = parseFloat(newWitrhdrawValueString);
+            if(isNaN(newWitrhdrawValue)){
+                alert('Please Enter Only Number !')
+                return;
+            }
+            const previousWithdrawBox = document.getElementById('total-withdraw');
+            const previousWithdrawValueString = previousWithdrawBox.innerText;
+            const previousWithdrawValue = parseFloat(previousWithdrawValueString);
+            
+
+            const previousTotalAmountBox = document.getElementById('total-amount');
+            const previousTotalAmountString = previousTotalAmountBox.innerText;
+            const previousTotalAmount = parseFloat(previousTotalAmountString);
+            if (newWitrhdrawValue > previousTotalAmount){
+                alert("Not Enough Money !!")
+                return;
+            }
+
+            const totalWithdraw = newWitrhdrawValue + previousWithdrawValue;
+            previousWithdrawBox.innerText = totalWithdraw;
+            const totalAmount = previousTotalAmount - newWitrhdrawValue;
+            previousTotalAmountBox.innerText = totalAmount;
+
+        })
+
+    </script>
     
 </body>
 </html>
