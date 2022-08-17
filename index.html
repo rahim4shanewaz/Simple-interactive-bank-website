@@ -37,8 +37,41 @@
             </div>
         </div>
     </section>
-
+    <script src="js/calculationFunction.js"></script>
     <script>
+        document.getElementById('deposit-btn').addEventListener('click', function(){
+            const newDepositValue = getNewValue('deposit-input-field');
+            if(isNaN(newDepositValue)){
+                alert('Please Enter Only Number !')
+                return;
+            }
+            const previoustDepositValue = getValuePreviousAmount('total-deposit');
+            const totalDeposit = newDepositValue + previoustDepositValue;
+            setTotalAmount('total-deposit', totalDeposit);
+            const previousTotal = getValuePreviousAmount('total-amount');
+            const totalAmount = previousTotal + newDepositValue;
+            setTotalAmount('total-amount', totalAmount);
+        })
+
+        document.getElementById('withdraw-btn').addEventListener('click', function(){
+            const newWithdrawValue = getNewValue('withdraw-input-field');
+            if(isNaN(newWithdrawValue)){
+                alert('Please Enter Only Number !')
+                return;
+            }
+            const previoustWithdrawValue = getValuePreviousAmount('total-withdraw');
+            const previousTotal = getValuePreviousAmount('total-amount');
+            if(newWithdrawValue > previousTotal){
+                alert("Not Enough Money For Withdraw");
+                return;
+            }
+            const totalWithdraw = previoustWithdrawValue + newWithdrawValue;
+            setTotalAmount('total-withdraw', totalWithdraw);
+            const totalAmount = previousTotal - newWithdrawValue;
+            setTotalAmount('total-amount', totalAmount);
+
+        })
+        /*
         document.getElementById('deposit-btn').addEventListener('click', function(){
             const depositInputField = document.getElementById('deposit-input-field');
             const newDepositValueString = depositInputField.value;
@@ -91,8 +124,11 @@
             previousTotalAmountBox.innerText = totalAmount;
 
         })
+        */
 
     </script>
+
+    
     
 </body>
 </html>
